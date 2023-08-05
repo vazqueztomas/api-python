@@ -22,8 +22,17 @@ async def get_users():
 
 @app.get('/user/{id}')
 async def get_user_by_id(id: int):
+    return search_user(id)
+
+
+@app.get("/userquery/")
+async def get_user_by_query(id: int):
+    return search_user(id)
+
+
+def search_user(id: int):
     usuarios = filter(lambda user: user.id == id, users)
     try:
         return list(usuarios)[0]
     except:
-        return {"error": "No se ha encontrado el usuario"}
+        return {"error": "No se ha encontrado al usuario"}
