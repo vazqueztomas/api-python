@@ -1,5 +1,5 @@
 # api-python
-Stack : Python, Swagger and FastAPI
+Stack : <b>Python, Swagger and FastAPI</b>
 
 APIPython is an API created in Python, using the FastAPI framework + Swagger for the docs.
 
