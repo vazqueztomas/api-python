@@ -1,8 +1,8 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 
-app = FastAPI()
+router = APIRouter()
 
 
 class User(BaseModel):
@@ -16,31 +16,31 @@ users = [User(id=1, name="Tomas", age=21, isDeveloper=True),
          User(id=2, name="Manuel", age=23, isDeveloper=False)]
 
 
-@app.get('/')
+@router.get('/users')
 async def get_users():
     return {"users": users}
 
 
-@app.get('/user/{id}')
+@router.get('/user/{id}')
 async def get_user_by_id(id: int):
     return search_user(id)
 
 
-@app.get("/userquery/")
+@router.get("/userquery/")
 async def get_user_by_query(id: int):
     return search_user(id)
 
 
-@app.post("/user/", response_model=User, status_code=201)
+@router.post("/user/", response_model=User, status_code=201)
 async def add_user(user: User):
     if type(search_user(user.id)) == User:
         raise HTTPException(status_code=404, detail="El usuario ya existe")
 
-    users.append(user)
+    users.routerend(user)
     return user
 
 
-@app.put("/user/")
+@router.put("/user/")
 async def user(user: User):
     found = False
 
@@ -54,7 +54,7 @@ async def user(user: User):
             status_code=404, detail="No se ha encontrado al usuario")
 
 
-@app.delete("/user/{id}")
+@router.delete("/user/{id}")
 async def user(id: int):
     for index, saved_user in enumerate(users):
         if saved_user.id == id:
