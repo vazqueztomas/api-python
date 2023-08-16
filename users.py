@@ -34,9 +34,29 @@ async def get_user_by_query(id: int):
 async def add_user(user: User):
     if type(search_user(user.id)) == User:
         return {"error": "El usuario ya existe"}
-    else:
-        users.append(user)
-        return {"Usuario agregado": user}
+
+    users.append(user)
+    return user
+
+
+@app.put("/user/")
+async def user(user: User):
+    found = False
+
+    for index, saved_user in enumerate(users):
+        if saved_user.id == user.id:
+            users[index] = user
+            found = True
+            return user
+    if not found:
+        return {"error": "No se ha encontrado el usuario"}
+
+
+@app.delete("/user/{id}")
+async def user(id: int):
+    for index, saved_user in enumerate(users):
+        if saved_user.id == id:
+            del users[index]
 
 
 def search_user(id: int):
