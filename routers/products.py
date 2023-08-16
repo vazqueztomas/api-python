@@ -1,7 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-router = APIRouter(prefix="/products")
+
+# tags = Swagger separation.
+router = APIRouter(prefix="/products", tags=["Products"])
 
 
 products_list = ["Producto1", "Producto2", "Producto3"]
